@@ -15,7 +15,7 @@ namespace Assets.Scripts
                     var obj = (GameObject)Instantiate(Resources.Load("prefabs/peg"));
                     obj.transform.position = new Vector3(x, y, 0);
 
-                    if (y % 2 == 0)
+                    if (x % 2 == 0)
                         obj.transform.Translate(.5f, 0, 0);
                 }
             }

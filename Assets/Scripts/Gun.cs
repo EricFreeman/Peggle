@@ -1,17 +1,21 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
     public class Gun : MonoBehaviour
     {
         public Transform Barrel;
+        public float BallSpeed = 50;
 
         void Update()
         {
             if (Input.GetMouseButtonDown(0))
             {
-                var ball = (GameObject)Instantiate(Resources.Load("prefabs/ball"));
+                var ball = (GameObject)Instantiate(Resources.Load("Prefabs/Ball"));
                 ball.transform.position = Barrel.position;
+                var e = transform.rotation.eulerAngles;
+                ball.rigidbody2D.AddForce(transform.up * -BallSpeed);
             }
         }
     }

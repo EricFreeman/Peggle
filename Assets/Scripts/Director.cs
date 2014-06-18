@@ -5,15 +5,33 @@ namespace Assets.Scripts
     public class Director : MonoBehaviour
     {
         public Gun Gun;
+        public UILabel BallsRemainingLabel;
+
+        public int BallsRemaining
+        {
+            get { return _ballsRemaining; }
+            set
+            {
+                _ballsRemaining = value;
+                BallsRemainingLabel.text = "Balls Remaining: " + value;
+            }
+        }
 
         private bool _shotfired;
+        private int _ballsRemaining;
+
+        void Start()
+        {
+            BallsRemaining = 5;
+        }
 
         void Update()
         {
-            if (Input.GetMouseButtonDown(0) && !_shotfired)
+            if (Input.GetMouseButtonDown(0) && !_shotfired && BallsRemaining > 0)
             {
                 Gun.Shoot();
                 _shotfired = true;
+                BallsRemaining--;
             }
         }
 

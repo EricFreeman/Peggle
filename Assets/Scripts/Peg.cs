@@ -7,6 +7,8 @@ namespace Assets.Scripts
         public Sprite DefaultImage;
         public Sprite HitImage;
 
+        public bool IsHit;
+
         private SpriteRenderer _renderer;
 
         void Start()
@@ -17,6 +19,7 @@ namespace Assets.Scripts
         void OnCollisionEnter2D(Collision2D col)
         {
             _renderer.sprite = HitImage;
+            IsHit = true;
         }
     }
 }

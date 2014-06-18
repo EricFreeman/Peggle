@@ -4,19 +4,18 @@ namespace Assets.Scripts
 {
     public class TurnTowardsMouse : MonoBehaviour
     {
-        public float Speed;
-
         void FixedUpdate()
         {
-            var playerPlane = new Plane(Vector3.up, transform.position);
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            var hitdist = 0.0f;
-            if (playerPlane.Raycast(ray, out hitdist))
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, 100))
             {
-                var targetPoint = ray.GetPoint(hitdist);
-                var targetRotation = Quaternion.LookRotation(targetPoint - transform.position);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Speed * Time.time);
+                var hitPoint = hit.point;
+                var targetDir = hitPoint - transform.position;
+                float angle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg;
+                transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+                transform.Rotate(0, 0, 90);
             }
         }
     }

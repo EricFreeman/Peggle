@@ -1,0 +1,23 @@
+﻿using UnityEngine;
+
+namespace Assets.Scripts
+{
+    public class TurnTowardsMouse : MonoBehaviour
+    {
+        public float Speed;
+
+        void FixedUpdate()
+        {
+            var playerPlane = new Plane(Vector3.forward, transform.position);
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            var hitdist = 0.0f;
+            if (playerPlane.Raycast(ray, out hitdist))
+            {
+                var targetPoint = ray.GetPoint(hitdist);
+                var targetRotation = Quaternion.LookRotation(targetPoint - transform.position);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Speed * Time.time);
+            }
+        }
+    }
+}

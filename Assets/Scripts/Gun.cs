@@ -1,12 +1,11 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts
 {
     public class Gun : MonoBehaviour
     {
         public Transform Barrel;
-        public float BallSpeed = 50;
+        public float BallSpeed = 30;
 
         void Update()
         {

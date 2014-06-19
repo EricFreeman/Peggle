@@ -30,7 +30,12 @@ namespace Assets.Scripts
         {
             if (Input.GetMouseButtonDown(0))
             {
-                //continue to next level or restart depending on IsWin
+                if(!IsWin) 
+                    Application.LoadLevel(Application.loadedLevelName);
+                else
+                {
+                    //load the next level here
+                }
             }
         }
     }

@@ -1,15 +1,21 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets.Scripts
 {
     public class Director : MonoBehaviour
     {
+        #region Properties
+
         public Gun Gun;
         public UILabel BallsRemainingLabel;
         public UILabel ClearPegsRemainingLabel;
         public Transform PegBoard;
         public GameOverMenu GameOverMenu;
+
+        public List<Transform> LevelList;
+        public int CurrentLevel;
 
         public int BallsRemaining
         {
@@ -35,10 +41,13 @@ namespace Assets.Scripts
         private int _ballsRemaining;
         private int _clearPegsRemaining;
 
+        #endregion
+
+        #region Start/Update
+
         void Start()
         {
-            BallsRemaining = 5;
-            UpdateClearPegs();
+            ReloadLevel();
         }
 
         void Update()
@@ -50,6 +59,10 @@ namespace Assets.Scripts
                 BallsRemaining--;
             }
         }
+
+        #endregion
+
+        #region Turn Over
 
         public void KillBall()
         {
@@ -74,5 +87,28 @@ namespace Assets.Scripts
         {
             ClearPegsRemaining = PegBoard.GetComponentsInChildren<Peg>().Count(x => x.IsClear && !x.IsHit);
         }
+
+        #endregion
+
+        #region Levels
+
+        public void ReloadLevel()
+        {
+            if(PegBoard != null)
+                DestroyImmediate(PegBoard.gameObject);
+
+            PegBoard = ((GameObject)Instantiate(Resources.Load("Prefabs/Levels/" + LevelList[CurrentLevel].name))).transform;
+            GameOverMenu.gameObject.SetActive(false);
+            BallsRemaining = 5;
+            UpdateClearPegs();
+        }
+
+        public void LoadNextLevel()
+        {
+            CurrentLevel++;
+            ReloadLevel();
+        }
+
+        #endregion
     }
 }

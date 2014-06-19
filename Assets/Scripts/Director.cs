@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
@@ -6,6 +7,8 @@ namespace Assets.Scripts
     {
         public Gun Gun;
         public UILabel BallsRemainingLabel;
+        public UILabel ClearPegsRemainingLabel;
+        public Transform PegBoard;
 
         public int BallsRemaining
         {
@@ -17,12 +20,24 @@ namespace Assets.Scripts
             }
         }
 
+        public int ClearPegsRemaining
+        {
+            get { return _clearPegsRemaining; }
+            set
+            {
+                _clearPegsRemaining = value;
+                ClearPegsRemainingLabel.text = "Orange Pegs Remaining: " + value;
+            }
+        }
+
         private bool _shotfired;
         private int _ballsRemaining;
+        private int _clearPegsRemaining;
 
         void Start()
         {
             BallsRemaining = 5;
+            UpdateClearPegs();
         }
 
         void Update()
@@ -38,6 +53,7 @@ namespace Assets.Scripts
         public void KillBall()
         {
             _shotfired = false;
+            UpdateClearPegs();
 
             foreach (var peg in GameObject.FindGameObjectsWithTag("Peg"))
             {
@@ -45,6 +61,11 @@ namespace Assets.Scripts
                 if(p != null && p.IsHit)
                     Destroy(peg.gameObject);
             }
+        }
+
+        public void UpdateClearPegs()
+        {
+            ClearPegsRemaining = PegBoard.GetComponentsInChildren<Peg>().Count(x => x.IsClear && !x.IsHit);
         }
     }
 }

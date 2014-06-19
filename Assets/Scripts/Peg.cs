@@ -8,6 +8,7 @@ namespace Assets.Scripts
         public Sprite HitImage;
 
         public bool IsHit;
+        public bool IsClear;
 
         private SpriteRenderer _renderer;
 

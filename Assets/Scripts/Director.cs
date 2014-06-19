@@ -9,6 +9,7 @@ namespace Assets.Scripts
         public UILabel BallsRemainingLabel;
         public UILabel ClearPegsRemainingLabel;
         public Transform PegBoard;
+        public GameOverMenu GameOverMenu;
 
         public int BallsRemaining
         {
@@ -60,6 +61,12 @@ namespace Assets.Scripts
                 var p = peg.GetComponent<Peg>();
                 if(p != null && p.IsHit)
                     Destroy(peg.gameObject);
+            }
+
+            if (BallsRemaining == 0)
+            {
+                GameOverMenu.gameObject.SetActive(true);
+                GameOverMenu.Setup();
             }
         }
 
